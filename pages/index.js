@@ -11,17 +11,14 @@ export default function Home() {
   const [dataYear, setDataYear] = useState([]);
 
   const fetchAndCalculateAverages = async () => {
-    console.log("mmi: 1")
     const weekData = await fetchStockData(symbol, '1day', 7); // 7 days for a week
     const monthData = await fetchStockData(symbol, '1day', 30); // 30 days for a month
     const yearData = await fetchStockData(symbol, '1day', 365); // 365 days for a year
 
-    console.log("mmi: 2")
-    setDataWeek(calculateRunningAverage(weekData, 7));
+    let running_average = calculateRunningAverage(weekData, 7)
+    setDataWeek(running_average);
     setDataMonth(calculateRunningAverage(monthData, 30));
     setDataYear(calculateRunningAverage(yearData, 365));
-
-    console.log("mmi: 3")
   };
 
   return (
@@ -47,7 +44,7 @@ export default function Home() {
         height={300}
         series={[
           {
-            data: dataWeek.map((d) => ({ x: d.datetime, y: d.average })),
+            data: dataWeek,
             label: 'Week',
           },
         ]}
@@ -62,7 +59,7 @@ export default function Home() {
         height={300}
         series={[
           {
-            data: dataMonth.map((d) => ({ x: d.datetime, y: d.average })),
+            data: dataMonth,
             label: 'Month',
           },
         ]}
@@ -77,7 +74,7 @@ export default function Home() {
         height={300}
         series={[
           {
-            data: dataYear.map((d) => ({ x: d.datetime, y: d.average })),
+            data: dataYear,
             label: 'Year',
           },
         ]}
