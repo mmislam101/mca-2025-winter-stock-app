@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { fetchStockData } from '../lib/fetchStockData';
 import { calculateRunningAverage } from '../lib/calculateAverages';
 import { LineChart } from '@mui/x-charts/LineChart';
-import { TextField, Button, Container, Typography } from '@mui/material';
+import { TextField, Button, Container, Typography, AppBar, Toolbar } from '@mui/material';
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from '../firebase';
 
 export default function Home() {
   const router = useRouter();
